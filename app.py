@@ -133,7 +133,9 @@ def live_update():
     
     # Update trend
     new_value = np.random.randint(1000,2000)
-    st.session_state.trend = st.session_state.trend.append({"Date": datetime.now(), "Processed Docs": new_value}, ignore_index=True)
+    new_row = pd.DataFrame([{"Date": datetime.now(), "Processed Docs": new_value}])
+    st.session_state.trend = pd.concat([st.session_state.trend, new_row], ignore_index=True)
+    
     if len(st.session_state.trend) > 10:
         st.session_state.trend = st.session_state.trend.iloc[1:]
 
